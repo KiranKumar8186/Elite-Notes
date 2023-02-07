@@ -1,0 +1,16 @@
+os
+re
+requests
+whisper
+numpy
+torch
+tqdm
+more-itertools
+transformers>=4.19.0
+ffmpeg-python==0.2.0
+pip install git+https://github.com/openai/whisper.git 
+streamlit==1.15.2
+transformers
+openai
+pydub
+time
