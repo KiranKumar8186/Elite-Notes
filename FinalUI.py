@@ -1,0 +1,432 @@
+import os
+import whisper
+import streamlit as st
+from pydub import AudioSegment
+import openai
+# from googletrans import Translator
+from google_trans_new import google_translator 
+from keybert import KeyBERT
+from transformers import pipeline
+import googletrans
+
+from sumy.parsers.plaintext import PlaintextParser
+from sumy.nlp.tokenizers import Tokenizer
+from sumy.summarizers.lex_rank import LexRankSummarizer
+
+#-------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+                                    ## Drive Libraries
+import streamlit as st
+import requests
+import whisper
+import time
+#--------------------------------------------------------------------------------------------
+                                    ## Youtube Libraries
+import streamlit as st
+import time
+from utils import *
+##--------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+st.set_page_config(
+    page_title="Elite Notes",
+    page_icon=":clipboard:",
+    layout="wide",
+)
+
+##----------------------------------------------------------------## Saving Files Path--------------------------------------------------------------------------------
+
+upload_path = "uploads/"
+download_path = "downloads/"
+transcript_path = "transcripts/"
+
+##--------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+st.markdown("<h1 style='text-align: center; color: red; font-size: 55px;'>Elite Notes</h1>", unsafe_allow_html=True)
+st.markdown("<h2 style='padding: 10px; text-align: center; color: lightblack; font-size: 15px; margin : 15px auto;'>At EliteNotes, we believe everyone is a note-taker because every conversation matters</h1>", unsafe_allow_html=True)
+st.markdown("---")
+st.markdown("<h3 style= 'color: red;'>Audio Transcribe</h3>", unsafe_allow_html=True)
+
+uploaded_file = st.file_uploader("Upload audio file", type=["wav","mp3","ogg","wma","aac","flac","mp4","flv"])
+# st.audio(uploaded_file)  
+
+##--------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+def main():
+    model =  load_whisper_model()
+    if uploaded_file:
+        get_loaded_file = get_audio_from_Upload(uploaded_file) 
+        st.success("File downloaded!")
+        st.sidebar.header("Your 🎵 Audio or 🎥 Video...")      
+        st.sidebar.video(uploaded_file)
+        st.markdown("<h1 style='text-align: left; color: red; font-size: 15px;'>Transcribe</h1>", unsafe_allow_html=True)
+        transcribe_button = st.checkbox("")
+        #-----------------------------------------------------------------## Transcribing the audio file (refer utils.py) ##------------------------------------              
+        if transcribe_button:
+            ##---------------------------------------------------------------------
+            start_time = time.time()
+            ##---------------------------------------------------------------------
+            
+            with st.spinner("Transcribing audio..."):
+                result = None
+                try:
+                    result = transcribe_audio(model, uploaded_file)
+                except RuntimeError:
+                    result = None
+                    st.warning("Oops! Someone else is using the model right now to transcribe another video. Please try again in a few seconds.")
+            
+            ##---------------------------------------------------------------------                    
+            end_time = time.time()
+            time_elapsed = end_time - start_time
+            st.write("Time elapsed:", round(time_elapsed,2), "seconds")
+            ##---------------------------------------------------------------------
+            #------------------------------## getting transcript Text and Downlaoding Text file into .txt or .srt (process refer to utils.py) ##----------------                                                       
+                
+            if result:
+                st.sidebar.header("Select Option To Download The Transcript :")
+                file_extension_1 = st.sidebar.selectbox("Select Here...", ["TXT (.txt)", "SubRip (.srt)"], key='selectbox_1')
+                st.sidebar.write("You selected: ", file_extension_1)
+                                        
+                # file_extension = st.selectbox("Select File Type To Download Transcript :", options=["TXT (.txt)", "SubRip (.srt)"])
+                if file_extension_1 == "TXT (.txt)":
+                    file_extension_1 = "txt"
+                    data = result['text'].strip()
+                elif file_extension_1 == "SubRip (.srt)":
+                    file_extension_1 = "srt"
+                    data = result['srt']                           
+                
+                #---------------------------------------## Printing the Transcript and dtecting the language (process refer to utils.py)------------------------                             
+                
+                det_L = st.success("Detected language: {}".format(result['language']))
+                data = st.text_area("Transcript :", value= data, height=350)
+    
+                #-------------------------------------------## Downloading transcripts into .txt or .srt------------------------------------------------------------    
+                                                            
+                st.download_button("Download", data=data, file_name="Transcript.{}".format(file_extension_1))
+
+#                 #--------------------------------------------------------------------------------------------------------------------------------------------#        
+#                 #                                                         Translation                                                                        #
+#                 #--------------------------------------------------------------------------------------------------------------------------------------------#
+#                 st.markdown("<h1 style='text-align: left; color: red; font-size: 15px;'>Translate</h1>", unsafe_allow_html=True)
+#                 translate_button = st.checkbox("⚛")
+#                 if translate_button:
+#                     translator = google_translator()  
+#                     transcript_out = result['text'].strip()
+#                     translated_text = translator.translate(transcript_out, lang_tgt='hi').text
+#                     st.success("Translation completed!")
+#                     st.write("Translated Text:", translated_text)
+                        
+                
+#                 #--------------------------------------------------------------------------------------------------------------------------------------------#        
+#                 #                                                         Summarizer                                                                        #
+#                 #--------------------------------------------------------------------------------------------------------------------------------------------#
+#                 st.markdown("<h1 style='text-align: left; color: red; font-size: 15px;'>Summarization</h1>", unsafe_allow_html=True)
+#                 Summary_button = st.checkbox("↔")
+#                 if Summary_button:
+#                     with st.spinner(f"Generating Summary... 💫"):
+#                         data = result['text'].strip()
+#                         if data:
+#                             summary_Points = point_wise_summary(data)
+#                             st.write("Summary :")
+#                             for point in summary_Points:
+#                                 st.write("+" + point)
+#             else:
+#                 st.warning("Transcription failed. Please try again.")
+#     else:
+#         st.warning("Sorry, the video has to be shorter than or equal to eight minutes.")
+
+if __name__ == "__main__":
+        main()
+        
+#---------------------------------------------------------------------------------------------------------------------------------------------------------------#        
+#                                                                                                                                                               #   
+#                                   Uploading URL and Verifying whether it is a Youtube's URL or GDrive's URL##                                                 #
+#                                                                                                                                                               #
+#---------------------------------------------------------------------------------------------------------------------------------------------------------------#
+
+url = st.text_input("Enter the URL: ")
+st.warning("Make sure that URL can access anyone...")
+st.button("Submit")
+url_type = verify_url(url)
+#------------------------------------------------------------## if it is a Youtube URL ##----------------------------------------------------------------------------
+if url_type == "youtube":
+    def main():       
+##-----------------------------------------------------## Load Whisper model ##------------------------------------------------------------------------------
+        model =  load_whisper_model()    
+#---------------------------------------------------- # Check if the input url is a valid YouTube url (refer utils.py) ##------------------------------------
+        if url:          
+            right_url = valid_url(url)
+            if right_url:
+                if get_video_duration_from_youtube_url(url) <= MAX_VIDEO_LENGTH: 
+                    # Display YouTube video
+                    _,col2,_ =st.columns([0.2, 0.25, 0.2])
+                    col2.video(url)
+                    st.markdown("---")
+#----------------------------------------------------------# Transcribe checkbox-----------------------------------------------------------------                             
+                    st.markdown("<h1 style='text-align: left; color: red; font-size: 15px;'>Transcribe</h1>", unsafe_allow_html=True)
+                    transcribe_cb = st.checkbox("🎦")                    
+#-----------------------------------------------------------------## Transcribing the audio file (refer utils.py) ##-----------------------------
+                    if transcribe_cb:
+                        ##---------------------------------------------------------------------
+                        start_time = time.time()
+                        ##---------------------------------------------------------------------
+            
+                        with st.spinner("Transcribing audio..."):
+                            result = None
+                            try:
+                                result = transcribe_URL(model, url)
+                            except RuntimeError:
+                                result = None
+                                st.warning("Oops! Someone else is using the model right now to transcribe another video. Please try again in a few seconds.")
+
+                        ##---------------------------------------------------------------------                    
+                        end_time = time.time()
+                        time_elapsed = end_time - start_time
+                        st.write("Time elapsed:", round(time_elapsed,2), "seconds")        
+                        #------------------------------## Result Text and Downlaoding Text file into .txt or .srt (process refer to utils.py) ##---------------------                                                                               
+                        if result:
+                            # Print detected language
+                            # Select output file extension and get data
+                            st.sidebar.header("Select Option To Download The Transcript :")
+                            file_extension_2 = st.sidebar.selectbox("Select Here...", ["TXT (.txt)", "SubRip (.srt)"], key='selectbox_2')
+                            st.sidebar.write("You selected: ", file_extension_2)
+                                                    
+                            # file_extension = st.selectbox("Select File Type To Download Transcript :", options=["TXT (.txt)", "SubRip (.srt)"])
+                            if file_extension_2 == "TXT (.txt)":
+                                file_extension_2 = "txt"
+                                data = result['text'].strip()
+                            elif file_extension_2 == "SubRip (.srt)":
+                                file_extension_2 = "srt"
+                                data = result['srt']                           
+#---------------------------------------## Printing the Transcript and dtecting the language (process refer to utils.py)-----------------                                                        
+                            det_L = st.success("Detected language: {}".format(result['language']))
+                            data = st.text_area("Transcript :", value= data, height=350)
+#--------------------------------------------------------------## Downloading transcripts into .txt or .srt----------------------------------                                                                          
+                            st.download_button("Download", data=data, file_name="Transcript.{}".format(file_extension_2))
+#------------------------------------------------------------Drive URL----------------------------------------------------------------------------------------------
+                else:
+                    st.warning("Sorry, the video has to be shorter than or equal to eight minutes.")
+            else:
+                st.warning("❎ Invalid YouTube URL.")
+    if __name__ == "__main__":
+        main()
+#------------------------------------------------------------Drive URL----------------------------------------------------------------------------------------------
+elif url_type == "drive":
+    def main():
+        with st.spinner("Loading Whisper model..."):
+            model =  load_whisper_model()
+        #----------------------------------- ## input url, downloading and display the video or audio (refer utils.py) ##-------------------------------------------
+        if url:
+            get_GDrive_file = get_audio_from_GDrive_url(url)
+            load_gdrive_file = Load_Video()
+            st.markdown("<h1 style='text-align: left; color: red; font-size: 15px;'>Transcribe</h1>", unsafe_allow_html=True)
+            transcribe_cb = st.checkbox("🎤")
+            #-----------------------------------------------------------------## Transcribing the audio file (refer utils.py) ##------------------------------------           
+            if transcribe_cb:
+                ##---------------------------------------------------------------------
+                start_time = time.time()
+                ##---------------------------------------------------------------------
+            
+                with st.spinner("Transcribing audio..."):
+                    result = None
+                    try:
+                        result = transcribe_URL(model, url)
+                    except RuntimeError:
+                        result = None
+                        st.warning("Oops! Someone else is using the model right now to transcribe another video. Please try again in a few seconds.")
+                
+                ##---------------------------------------------------------------------                    
+                end_time = time.time()
+                time_elapsed = end_time - start_time
+                st.write("Time elapsed:", round(time_elapsed,2), "seconds")
+                ##---------------------------------------------------------------------        
+                #------------------------------## getting transcript Text and Downlaoding Text file into .txt or .srt (process refer to utils.py) ##----------------                                                       
+                
+                if result:
+                    st.sidebar.header("Select Option To Download The Transcript :")
+                    file_extension_3 = st.sidebar.selectbox("Select Here...", ["TXT (.txt)", "SubRip (.srt)"], key='selectbox_3')
+                    st.sidebar.write("You selected: ", file_extension_3)
+                                            
+                    # file_extension = st.selectbox("Select File Type To Download Transcript :", options=["TXT (.txt)", "SubRip (.srt)"])
+                    if file_extension_3 == "TXT (.txt)":
+                        file_extension_3 = "txt"
+                        data = result['text'].strip()
+                    elif file_extension_3 == "SubRip (.srt)":
+                        file_extension_3 = "srt"
+                        data = result['srt']                           
+                   
+                    #---------------------------------------## Printing the Transcript and dtecting the language (process refer to utils.py)--------------------------                             
+                  
+                    det_L = st.success("Detected language: {}".format(result['language']))
+                    data = st.text_area("Transcript :", value= data, height=350)
+               
+                #-------------------------------------------## Downloading transcripts into .txt or .srt--------------------------------------------------------------    
+                                                             
+                    st.download_button("Download", data=data, file_name="Transcript.{}".format(file_extension_3))
+               
+##--------------------------------------------------------------------------------------------------------------------------------------------------------------------
+        else:
+            st.warning("Sorry, the video has to be shorter than or equal to eight minutes.")
+
+    if __name__ == "__main__":
+        main()
+else:
+    print("Invalid URL.")
+    
+##--------------------------------------------------------------------------------------------------------------------------------------------------------------------
+# upload_path = "uploads/"
+# download_path = "downloads/"
+# transcript_path = "transcripts/"
+
+# ##----------------------------------------------------{Converting Any Audio or Video files into .mp3}-----------------------------------------------------------------------------
+
+# @st.cache(persist=True,allow_output_mutation=False,show_spinner=True,suppress_st_warning=True)
+# def to_mp3(audio_file, output_audio_file, upload_path, download_path):
+#     ## Converting Different Audio Formats To MP3 ##
+#     if audio_file.name.split('.')[-1].lower()=="wav":
+#         audio_data = AudioSegment.from_wav(os.path.join(upload_path,audio_file.name))
+#         audio_data.export(os.path.join(download_path,output_audio_file), format="mp3")
+
+#     elif audio_file.name.split('.')[-1].lower()=="mp3":
+#         audio_data = AudioSegment.from_mp3(os.path.join(upload_path,audio_file.name))
+#         audio_data.export(os.path.join(download_path,output_audio_file), format="mp3")
+
+#     elif audio_file.name.split('.')[-1].lower()=="ogg":
+#         audio_data = AudioSegment.from_ogg(os.path.join(upload_path,audio_file.name))
+#         audio_data.export(os.path.join(download_path,output_audio_file), format="mp3")
+
+#     elif audio_file.name.split('.')[-1].lower()=="wma":
+#         audio_data = AudioSegment.from_file(os.path.join(upload_path,audio_file.name),"wma")
+#         audio_data.export(os.path.join(download_path,output_audio_file), format="mp3")
+
+#     elif audio_file.name.split('.')[-1].lower()=="aac":
+#         audio_data = AudioSegment.from_file(os.path.join(upload_path,audio_file.name),"aac")
+#         audio_data.export(os.path.join(download_path,output_audio_file), format="mp3")
+
+#     elif audio_file.name.split('.')[-1].lower()=="flac":
+#         audio_data = AudioSegment.from_file(os.path.join(upload_path,audio_file.name),"flac")
+#         audio_data.export(os.path.join(download_path,output_audio_file), format="mp3")
+
+#     elif audio_file.name.split('.')[-1].lower()=="m4a":
+#         audio_data = AudioSegment.from_flv(os.path.join(upload_path,audio_file.name))
+#         audio_data.export(os.path.join(download_path,output_audio_file), format="mp3")
+
+#     elif audio_file.name.split('.')[-1].lower()=="mp4":
+#         audio_data = AudioSegment.from_file(os.path.join(upload_path,audio_file.name),"mp4")
+#         audio_data.export(os.path.join(download_path,output_audio_file), format="mp3")
+#     return output_audio_file
+
+# ##--------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+# @st.cache(persist=True,allow_output_mutation=False,show_spinner=True,suppress_st_warning=True)
+# def process_audio(filename, model_type):
+#     model = whisper.load_model(model_type)
+#     result = model.transcribe(filename)
+#     return result["text"]
+
+# @st.cache(persist=True,allow_output_mutation=False,show_spinner=True,suppress_st_warning=True)
+# def save_transcript(transcript_data, txt_file):
+#     with open(os.path.join(transcript_path, txt_file),"w") as f:
+#         f.write(transcript_data)
+
+# st.markdown("---")
+
+    
+# #----------------------------------------------------------------------------## Transcribing ##---------------------------------------------------------------------------------------------
+
+# audio_file = None
+
+# if uploaded_file is not None:
+#     audio_bytes = uploaded_file.read()
+#     with open(os.path.join(upload_path,uploaded_file.name),"wb") as f:
+#         f.write((uploaded_file).getbuffer())
+#     with st.spinner(f"Processing Audio ... 💫"):
+#         output_audio_file = uploaded_file.name.split('.')[0] + '.mp3'
+#         output_audio_file = to_mp3(uploaded_file, output_audio_file, upload_path, download_path)
+#         audio_file = open(os.path.join(download_path,output_audio_file), 'rb')
+#         audio_bytes = audio_file.read()
+#     print("Opening ",audio_file)
+#     st.markdown("---")
+#     col1, col2 = st.columns(2)
+#     with col1:
+#         st.audio(audio_bytes)
+#     with col2:
+#         whisper_model_type = st.radio("Please choose your model type", ('Tiny', 'Base', 'Small', 'Medium', 'Large'))
+                
+# #-------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+#                                                                         ## Translation ##
+
+# #-------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+                                                               
+# translator = googletrans.Translator()
+
+# @st.cache(persist=True,allow_output_mutation=False,show_spinner=True,suppress_st_warning=True)
+# def process_audio(filename, model_type):
+#     model = whisper.load_model(model_type)
+#     result = model.transcribe(filename)
+#     return result["text"]
+
+# @st.cache(persist=True,allow_output_mutation=False,show_spinner=True,suppress_st_warning=True)
+# def save_transcript(transcript_data, txt_file):
+#     with open(os.path.join(transcript_path, txt_file),"w") as f:
+#         f.write(transcript_data)
+
+# if uploaded_file is not None:
+#     audio_bytes = uploaded_file.read()
+#     with open(os.path.join(upload_path,uploaded_file.name),"wb") as f:
+#         f.write((uploaded_file).getbuffer())
+#     with st.spinner(f"Processing Audio ... 💫"):
+#         output_audio_file = uploaded_file.name.split('.')[0] + '.mp3'
+#         output_audio_file = to_mp3(uploaded_file, output_audio_file, upload_path, download_path)
+#         audio_file = open(os.path.join(download_path,output_audio_file), 'rb')
+#         audio_bytes = audio_file.read()
+#     print("Opening ",audio_file)
+#     st.markdown("---")
+
+#     st.markdown("<h3 style= 'color: red;'>Translation</h3>", unsafe_allow_html=True)
+
+    
+#     if st.checkbox("Generate Translate "):
+#         with st.spinner(f"Generating Translate... 💫"):
+#             transcript = process_audio(str(os.path.abspath(os.path.join(download_path,output_audio_file))), whisper_model_type.lower())
+           
+#             translated_text = translator.translate(transcript, dest='hi').text
+#             st.subheader("Translation:")
+#             st.write(translated_text)
+           
+# #-----------------------------------------------------------------------------------------------------------------
+
+# @st.cache(persist=True,allow_output_mutation=False,show_spinner=True,suppress_st_warning=True)
+# def process_audio(filename, model_type):
+#     model = whisper.load_model(model_type)
+#     result = model.transcribe(filename)
+#     return result["text"]
+
+# @st.cache(persist=True,allow_output_mutation=False,show_spinner=True,suppress_st_warning=True)
+# def save_transcript(transcript_data, txt_file):
+#     with open(os.path.join(transcript_path, txt_file),"w") as f:
+#         f.write(transcript_data)
+
+# if uploaded_file is not None:
+#     audio_bytes = uploaded_file.read()
+#     with open(os.path.join(upload_path,uploaded_file.name),"wb") as f:
+#         f.write((uploaded_file).getbuffer())
+#     with st.spinner(f"Processing Audio ... 💫"):
+#         output_audio_file = uploaded_file.name.split('.')[0] + '.mp3'
+#         output_audio_file = to_mp3(uploaded_file, output_audio_file, upload_path, download_path)
+#         audio_file = open(os.path.join(download_path,output_audio_file), 'rb')
+#         audio_bytes = audio_file.read()
+#     print("Opening ",audio_file)
+#     st.markdown("---")
+
+#     st.markdown("<h3 style= 'color: red;'>Keyword Extraction</h3>", unsafe_allow_html=True)
+
+    
+#     if st.checkbox("Generate Keywords "):
+#         with st.spinner(f"Generating Keywords... 💫"):
+#             transcript = process_audio(str(os.path.abspath(os.path.join(download_path,output_audio_file))), whisper_model_type.lower())
+#             kw_model = KeyBERT()
+#             keywords = kw_model.extract_keywords(transcript)
+#             for items in keywords:
+  
+            
+#                st.write("*",items[0])
