@@ -11,4 +11,3 @@ git+https://github.com/openai/whisper.git
 transformers
 openai
 pydub
-time
