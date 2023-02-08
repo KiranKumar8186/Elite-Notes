@@ -1,12 +1,10 @@
 streamlit==1.15.2
 requests
-whisper
 numpy
 torch
 transformers>=4.19.0
 ffmpeg-python==0.2.0
 git+https://github.com/openai/whisper.git 
-openai
 pydub
 re
 AudioSegment (from pydub)
