@@ -121,22 +121,15 @@ def Load_Video():
 
 ##-------------------------------------------------{Upload File Part}-------------------------------------------------------------------------------------------------------------------
 
-# def get_audio_from_Upload(uploaded_file): 
-#     if uploaded_file is not None:
-#         upload_path = "downloads/"
-#         with open(os.path.join(upload_path, uploaded_file.name),"wb") as f:
-#             f.write((uploaded_file).getbuffer())
-
-def save_file(uploaded_file):
-    upload_folder = './uploads'
-    if not os.path.exists(upload_folder):
-        os.makedirs(upload_folder)
-    uploaded_file.save(os.path.join(upload_folder,uploaded_file.filename))
+def get_audio_from_Upload(uploaded_file): 
+    if uploaded_file is not None:
+        upload_path = "downloads/"
+        with open(os.path.join(upload_path, uploaded_file.name),"wb") as f:
+            f.write((uploaded_file).getbuffer())
     
 @st.experimental_memo(show_spinner=False, max_entries=1)
 def transcribe_audio(_model, uploaded_file):
-#     get_audio_from_Upload(uploaded_file)
-    save_file(uploaded_file, file_name)
+    get_audio_from_Upload(uploaded_file)
     options = whisper.DecodingOptions(language='en', fp16=False)
     result = _model.transcribe(os.path.join("downloads", uploaded_file.name), **options.__dict__)
     result['srt'] = _whisper_result_to_srt(result)
