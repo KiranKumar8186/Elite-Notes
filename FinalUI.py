@@ -2,7 +2,6 @@ import os
 import whisper
 import streamlit as st
 from pydub import AudioSegment
-import openai
 #-------------------------------------------------------------------------------------------------------------------------------------------------------------------------
                                     ## Drive Libraries
 import streamlit as st
