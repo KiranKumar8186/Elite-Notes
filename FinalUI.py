@@ -44,7 +44,7 @@ uploaded_file = st.file_uploader("Upload audio file", type=["wav","mp3","ogg","w
 def main():
     model =  load_whisper_model()
     if uploaded_file:
-        get_loaded_file = get_audio_from_Upload(uploaded_file) 
+        get_loaded_file = save_file(uploaded_file, file_name)
         st.success("File downloaded!")
         st.sidebar.header("Your 🎵 Audio or 🎥 Video...")      
         st.sidebar.video(uploaded_file)
