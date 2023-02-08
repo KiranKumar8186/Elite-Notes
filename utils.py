@@ -127,13 +127,12 @@ def Load_Video():
 #         with open(os.path.join(upload_path, uploaded_file.name),"wb") as f:
 #             f.write((uploaded_file).getbuffer())
 
-def save_file(uploaded_file, file_name):
+def save_file(uploaded_file):
     upload_folder = './uploads'
     if not os.path.exists(upload_folder):
         os.makedirs(upload_folder)
-    uploaded_file.save(os.path.join(upload_folder, file_name))
-file_name = uploaded_file.filename
-
+    uploaded_file.save(os.path.join(upload_folder,uploaded_file.filename))
+    
 @st.experimental_memo(show_spinner=False, max_entries=1)
 def transcribe_audio(_model, uploaded_file):
 #     get_audio_from_Upload(uploaded_file)
