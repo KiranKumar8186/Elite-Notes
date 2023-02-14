@@ -7,4 +7,4 @@ ffmpeg-python==0.2.0
 git+https://github.com/openai/whisper.git 
 pydub==0.25.1
 pytube==12.1.0
-regex==2022.10.31
+regex
