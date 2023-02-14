@@ -1,17 +1,14 @@
 import os
-import whisper
 import streamlit as st
 from pydub import AudioSegment
 #-------------------------------------------------------------------------------------------------------------------------------------------------------------------------
                                     ## Drive Libraries
-import streamlit as st
 import requests
 import whisper
 import time
 
 #--------------------------------------------------------------------------------------------
                                     ## Youtube Libraries
-import streamlit as st
 import time
 from utils import *
 
@@ -38,16 +35,16 @@ st.markdown("<h3 style= 'color: red;'>Audio Transcribe</h3>", unsafe_allow_html=
 
 uploaded_file = st.file_uploader("Upload audio file", type=["wav","mp3","ogg","wma","aac","flac","mp4","flv"])
 # st.audio(uploaded_file)  
-st.success("File downloaded!")
-st.sidebar.header("Your 🎵 Audio or 🎥 Video...")      
-st.sidebar.video(uploaded_file)
+
 ##--------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 def main():
     model =  load_whisper_model()
     if uploaded_file:
-        get_loaded_file = get_audio_from_Upload(uploaded_file)
-        
+        get_audio_from_Upload(uploaded_file)
+        st.success("File downloaded!")
+        st.sidebar.header("Your 🎵 Audio or 🎥 Video...")      
+        st.sidebar.video(uploaded_file)
         st.markdown("<h1 style='text-align: left; color: red; font-size: 15px;'>Transcribe</h1>", unsafe_allow_html=True)
         transcribe_button = st.checkbox("")
         #-----------------------------------------------------------------## Transcribing the audio file (refer utils.py) ##------------------------------------              
