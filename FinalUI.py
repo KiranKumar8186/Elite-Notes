@@ -45,7 +45,7 @@ def main():
             ##---------------------------------------------------------------------
             start_time = time.time()
             ##---------------------------------------------------------------------
-            with st.sidebar.spinner("Transcribing audio..."):
+            with st.spinner("Transcribing audio..."):
                 result = None
                 try:
                     result = transcribe_audio(model, uploaded_file)
