@@ -99,7 +99,9 @@ def main():
                 #-------------------------------------------## Downloading transcripts into .txt or .srt------------------------------------------------------------    
                                                             
                 st.download_button("Download", data=data, file_name="Transcript.{}".format(file_extension_1))
-
+                
+if __name__ == "__main__":
+        main()
 #---------------------------------------------------------------------------------------------------------------------------------------------------------------#        
 #                                                                                                                                                               #   
 #                                   Uploading URL and Verifying whether it is a Youtube's URL or GDrive's URL##                                                 #
