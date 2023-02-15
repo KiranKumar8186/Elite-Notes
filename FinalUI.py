@@ -1,32 +1,22 @@
 import os
 import streamlit as st
-
-
 ##--------------------------------------------------------------------------------------------------------------------------------------------------------------------
-
 st.set_page_config(
     page_title="Elite Notes",
     page_icon="📖",
     layout="wide",
 )
-
-
-
-from pydub import AudioSegment
 #-------------------------------------------------------------------------------------------------------------------------------------------------------------------------
                                     ## Drive Libraries
 import requests
 import whisper
 import time
-
+from pydub import AudioSegment
 #--------------------------------------------------------------------------------------------
                                     ## Youtube Libraries
 import time
 from utils import *
-
-
 ##----------------------------------------------------------------## Saving Files Path--------------------------------------------------------------------------------
-
 upload_path = "uploads/"
 download_path = "downloads/"
 transcript_path = "transcripts/"
@@ -40,41 +30,32 @@ st.markdown("<h3 style= 'color: red;'>Audio Transcribe</h3>", unsafe_allow_html=
 
 uploaded_file = st.file_uploader("Upload audio file", type=["wav","mp3","ogg","wma","aac","flac","mp4","flv"])
 # st.audio(uploaded_file)  
-
 ##--------------------------------------------------------------------------------------------------------------------------------------------------------------------
-
 def main():
-    model =  load_whisper_model()
-    
-    with st.spinner('whisperModel Loading'):
-        time.sleep(3)
-    st.success('WhisperModel Loaded')
-    
+    model =  load_whisper_model() 
     if uploaded_file:
-        getting_audio = get_audio_from_Upload(uploaded_file)
-        st.success("File downloaded!")
-        st.sidebar.header("Your 🎵 Audio or 🎥 Video...")      
+        getting_audio = get_audio_from_Upload(uploaded_file)        
+        st.sidebar.header("Your 🎵 Audio or 🎥 Video...") 
+        st.sidebar.success("File downloaded!")     
         st.sidebar.video(uploaded_file)
-        st.markdown("<h1 style='text-align: left; color: red; font-size: 15px;'>Transcribe</h1>", unsafe_allow_html=True)
-        transcribe_button = st.checkbox("")
+        st.sidebar.markdown("<h1 style='text-align: left; color: red; font-size: 15px;'>Generate_Transcript</h1>", unsafe_allow_html=True)
+        transcribe_button = st.sidebar.checkbox("")
         #-----------------------------------------------------------------## Transcribing the audio file (refer utils.py) ##------------------------------------              
         if transcribe_button:
             ##---------------------------------------------------------------------
             start_time = time.time()
             ##---------------------------------------------------------------------
-            
-            with st.spinner("Transcribing audio..."):
+            with st.sidebar.spinner("Transcribing audio..."):
                 result = None
                 try:
                     result = transcribe_audio(model, uploaded_file)
                 except RuntimeError:
                     result = None
                     st.warning("Oops! Someone else is using the model right now to transcribe another video. Please try again in a few seconds.")
-            
             ##---------------------------------------------------------------------                    
             end_time = time.time()
             time_elapsed = end_time - start_time
-            st.write("Time elapsed:", round(time_elapsed,2), "seconds")
+            st.sidebar.write("Time elapsed:", round(time_elapsed,2), "seconds")
             ##---------------------------------------------------------------------
             #------------------------------## getting transcript Text and Downlaoding Text file into .txt or .srt (process refer to utils.py) ##----------------                                                       
                 
