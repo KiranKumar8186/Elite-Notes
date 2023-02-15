@@ -8,7 +8,6 @@ st.set_page_config(
     page_title="Elite Notes",
     page_icon=":clipboard:",
     layout="wide",
-    theme="light",
 )
 
 
