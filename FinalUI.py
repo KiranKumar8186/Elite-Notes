@@ -6,7 +6,7 @@ import streamlit as st
 
 st.set_page_config(
     page_title="Elite Notes",
-    page_icon=":clipboard:",
+    page_icon="Ҿ",
     layout="wide",
 )
 
