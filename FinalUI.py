@@ -30,6 +30,7 @@ st.markdown("<h3 style= 'color: red;'>Audio Transcribe</h3>", unsafe_allow_html=
 
 uploaded_file = st.file_uploader("Upload audio file", type=["wav","mp3","ogg","wma","aac","flac","mp4","flv"])
 # st.audio(uploaded_file)  
+st.markdown("---")
 ##--------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 def main():
@@ -81,7 +82,7 @@ def main():
                 #-------------------------------------------## Downloading transcripts into .txt or .srt------------------------------------------------------------    
                                                             
                 st.download_button("Download", data=data, file_name="Transcript.{}".format(file_extension_1))
-                
+                st.markdown("---")
 if __name__ == "__main__":
         main()
 #---------------------------------------------------------------------------------------------------------------------------------------------------------------#        
