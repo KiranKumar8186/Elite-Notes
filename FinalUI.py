@@ -31,7 +31,7 @@ st.markdown("<h3 style= 'color: red;'>Audio Transcribe</h3>", unsafe_allow_html=
 uploaded_file = st.file_uploader("Upload audio file", type=["wav","mp3","ogg","wma","aac","flac","mp4","flv"])
 # st.audio(uploaded_file)  
 ##--------------------------------------------------------------------------------------------------------------------------------------------------------------------
-@st.cache
+
 def main():
     model =  load_whisper_model() 
     if uploaded_file:
