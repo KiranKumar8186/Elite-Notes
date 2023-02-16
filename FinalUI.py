@@ -100,7 +100,6 @@ if __name__ == "__main__":
 
 #---------------------------------------------------------------------------------------------------------------------------------------------------------------#
 url = col2.text_input("Enter the URL: ")
-# url = st.text_input("Enter the URL: ")
 col2.warning("Make sure that URL can access anyone...")
 col2.button("Submit")
 url_type = verify_url(url)
@@ -114,17 +113,14 @@ if url_type == "youtube":
         if url:          
             right_url = valid_url(url)
             if right_url:  
-               
+                st.sidebar.header("Your 🎦 Youtube Video...")
                 if get_video_duration_from_youtube_url(url) <= MAX_VIDEO_LENGTH: 
+                    st.sidebar.markdown("---")
                     st.sidebar.video(url)
-                    # Display YouTube video
-#                     _,col2,_ =st.columns([0.2, 0.25, 0.2])
-#                     col2.video(url)
-                    st.markdown("---")
 #----------------------------------------------------------# Transcribe checkbox-----------------------------------------------------------------
                     st.sidebar.markdown("---")
-                    st.sidebar.markdown("<h1 style='text-align: left; color: red; font-size: 15px;'>Get_Transcript</h1>", unsafe_allow_html=True)
-                    transcribe_cb = st.sidebar.checkbox("🎦")                    
+#                     st.sidebar.markdown("<h1 style='text-align: left; color: red; font-size: 15px;'></h1>", unsafe_allow_html=True)
+                    transcribe_cb = st.sidebar.checkbox("`Generate YouTube Transcript`")                    
 #-----------------------------------------------------------------## Transcribing the audio file (refer utils.py) ##-----------------------------
                     if transcribe_cb:
                         ##---------------------------------------------------------------------
