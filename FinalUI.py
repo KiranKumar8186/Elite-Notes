@@ -41,7 +41,7 @@ def main():
     if uploaded_file:
         getting_audio = get_audio_from_Upload(uploaded_file)        
         st.sidebar.header("Your 🎵 Audio or 🎥 Video...") 
-        st.sidebar.write("File downloaded!")     
+        st.sidebar.write("`File downloaded!`")     
         st.sidebar.video(uploaded_file)
         st.sidebar.markdown("<h1 style='text-align: left; color: red; font-size: 15px;'>Generate_Transcript</h1>", unsafe_allow_html=True)
         transcribe_button = st.sidebar.checkbox("")
@@ -81,7 +81,7 @@ def main():
                 #---------------------------------------## Printing the Transcript and dtecting the language (process refer to utils.py)------------------------                             
                 
                 det_L = st.success("Detected language: {}".format(result['language']))
-                data = st.text_area("Transcription of 🎵 `" + uploaded_file.name + "` :-", value= data, height=350)
+                data = st.text_area("Transcription of `" + uploaded_file.name + "` :-", value= data, height=350)
     
                 #-------------------------------------------## Downloading transcripts into .txt or .srt------------------------------------------------------------    
                                                             
