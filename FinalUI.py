@@ -115,7 +115,7 @@ if url_type == "youtube":
             if right_url:  
                 st.sidebar.header("Your 🎦 Youtube Video...")
                 if get_video_duration_from_youtube_url(url) <= MAX_VIDEO_LENGTH: 
-                    st.sidebar.audio(url)
+                    st.sidebar.video.audio(url)
 #----------------------------------------------------------# Transcribe checkbox-----------------------------------------------------------------
                     
 #                     st.sidebar.markdown("<h1 style='text-align: left; color: red; font-size: 15px;'></h1>", unsafe_allow_html=True)
