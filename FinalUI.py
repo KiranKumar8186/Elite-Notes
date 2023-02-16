@@ -170,8 +170,9 @@ elif url_type == "drive":
         if url:
             get_GDrive_file = get_audio_from_GDrive_url(url)
             load_gdrive_file = Load_Video()
-            st.markdown("<h1 style='text-align: left; color: red; font-size: 15px;'></h1>", unsafe_allow_html=True)
-            transcribe_cb = st.button("Get URL Transcription ")
+#             st.markdown("<h1 style='text-align: left; color: red; font-size: 15px;'></h1>", unsafe_allow_html=True)
+            transcribe_cb = st.sidebar.button("Get URL Transcription ")
+            st.sidebar.markdown("---")
             #-----------------------------------------------------------------## Transcribing the audio file (refer utils.py) ##------------------------------------           
             if transcribe_cb:
                 ##---------------------------------------------------------------------
@@ -197,7 +198,7 @@ elif url_type == "drive":
                     st.sidebar.header("Select Option To Download The Transcript :")
                     file_extension_3 = st.sidebar.selectbox("Select Here...", ["TXT (.txt)", "SubRip (.srt)"], key='selectbox_3')
                     st.sidebar.write("You selected: ", file_extension_3)
-                                            
+                    st.sidebar.markdown("---")                        
                     # file_extension = st.selectbox("Select File Type To Download Transcript :", options=["TXT (.txt)", "SubRip (.srt)"])
                     if file_extension_3 == "TXT (.txt)":
                         file_extension_3 = "txt"
