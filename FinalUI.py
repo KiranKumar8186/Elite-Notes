@@ -30,7 +30,7 @@ st.markdown("<h3 style= 'color: red;'>Audio Transcribe</h3>", unsafe_allow_html=
 
 col1, col2 = st.columns(2)
 
-col1.file_uploader("Upload audio file", type=["wav","mp3","ogg","wma","aac","flac","mp4","flv","m4a"])
+uploaded_file = col1.file_uploader("Upload audio file", type=["wav","mp3","ogg","wma","aac","flac","mp4","flv","m4a"])
 # uploaded_file = st.file_uploader("Upload audio file", type=["wav","mp3","ogg","wma","aac","flac","mp4","flv","m4a"])
 # # st.audio(uploaded_file)  
 st.markdown("---")
