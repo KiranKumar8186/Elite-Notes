@@ -94,8 +94,8 @@ if __name__ == "__main__":
 #                                   Uploading URL and Verifying whether it is a Youtube's URL or GDrive's URL##                                                 #
 #                                                                                                                                                               #
 #---------------------------------------------------------------------------------------------------------------------------------------------------------------#
-
-url = st.text_input("Enter the URL: ")
+url = col2.text_input("Enter the URL: ")
+# url = st.text_input("Enter the URL: ")
 st.warning("Make sure that URL can access anyone...")
 st.button("Submit")
 st.markdown("---")
