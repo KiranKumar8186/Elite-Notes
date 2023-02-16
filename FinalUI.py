@@ -32,7 +32,6 @@ col1, col2 = st.columns(2)
 
 uploaded_file = col1.file_uploader("Upload Audio File :", type=["wav","mp3","ogg","wma","aac","flac","mp4","flv","m4a"])
 # uploaded_file = st.file_uploader("Upload audio file", type=["wav","mp3","ogg","wma","aac","flac","mp4","flv","m4a"])
-# # st.audio(uploaded_file)  
 st.markdown("---")
 ##--------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -43,8 +42,8 @@ def main():
         st.sidebar.header("Your 🎵 Audio or 🎥 Video...") 
         st.sidebar.write("`File downloaded!`")     
         st.sidebar.audio(uploaded_file)
-        st.sidebar.markdown("<h1 style='text-align: left; color: red; font-size: 15px;'>`Generate Transcript`</h1>", unsafe_allow_html=True)
-        transcribe_button = st.sidebar.checkbox("")
+#         st.sidebar.markdown("<h1 style='text-align: left; color: red; font-size: 15px;'></h1>", unsafe_allow_html=True)
+        transcribe_button = st.sidebar.button("`Generate Transcript`")
         st.sidebar.markdown("---")
         #-----------------------------------------------------------------## Transcribing the audio file (refer utils.py) ##------------------------------------              
         if transcribe_button:
