@@ -40,8 +40,10 @@ def main():
         st.sidebar.header("Your 🎵 Audio or 🎥 Video...") 
         st.sidebar.success("File downloaded!")     
         st.sidebar.video(uploaded_file)
+        st.sidebar.markdown("---")
         st.sidebar.markdown("<h1 style='text-align: left; color: red; font-size: 15px;'>Generate_Transcript</h1>", unsafe_allow_html=True)
         transcribe_button = st.sidebar.checkbox("")
+        st.sidebar.markdown("---")
         #-----------------------------------------------------------------## Transcribing the audio file (refer utils.py) ##------------------------------------              
         if transcribe_button:
             ##---------------------------------------------------------------------
@@ -94,6 +96,7 @@ if __name__ == "__main__":
 url = st.text_input("Enter the URL: ")
 st.warning("Make sure that URL can access anyone...")
 st.button("Submit")
+st.markdown("---")
 url_type = verify_url(url)
 
 #------------------------------------------------------------## if it is a Youtube URL ##----------------------------------------------------------------------------
@@ -110,9 +113,10 @@ if url_type == "youtube":
                     _,col2,_ =st.columns([0.2, 0.25, 0.2])
                     col2.video(url)
                     st.markdown("---")
-#----------------------------------------------------------# Transcribe checkbox-----------------------------------------------------------------                             
-                    st.markdown("<h1 style='text-align: left; color: red; font-size: 15px;'>Transcribe</h1>", unsafe_allow_html=True)
-                    transcribe_cb = st.checkbox("🎦")                    
+#----------------------------------------------------------# Transcribe checkbox-----------------------------------------------------------------
+                    st.sidebar.markdown("---")
+                    st.sidebar.markdown("<h1 style='text-align: left; color: red; font-size: 15px;'>Get_Transcript</h1>", unsafe_allow_html=True)
+                    transcribe_cb = st.sidebar.checkbox("🎦")                    
 #-----------------------------------------------------------------## Transcribing the audio file (refer utils.py) ##-----------------------------
                     if transcribe_cb:
                         ##---------------------------------------------------------------------
@@ -130,7 +134,7 @@ if url_type == "youtube":
                         ##---------------------------------------------------------------------                    
                         end_time = time.time()
                         time_elapsed = end_time - start_time
-                        st.write("Time elapsed:", round(time_elapsed,2), "seconds")        
+                        st.sidebar.write("Time elapsed:", round(time_elapsed,2), "seconds")        
                         #------------------------------## Result Text and Downlaoding Text file into .txt or .srt (process refer to utils.py) ##---------------------                                                                               
                         if result:
                             st.sidebar.header("Select Option To Download The Transcript :")
