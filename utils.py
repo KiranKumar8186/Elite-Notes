@@ -35,12 +35,6 @@ def _get_audio_from_youtube_url(url):
     if not os.path.exists('downloads'):
         os.makedirs('downloads')
     yt.streams.filter(only_audio=True).first().download(filename=os.path.join('downloads','audio.mp3'))
-    
-def get_audio_from_youtube_url(url):
-    yt = YouTube(url)
-    if not os.path.exists('downloads'):
-        os.makedirs('downloads')
-    yt.streams.filter(only_audio=True).first().download(filename=os.path.join('downloads','audio.mp3'))    
 
 ##--------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
