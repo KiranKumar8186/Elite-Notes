@@ -44,7 +44,7 @@ def main():
         st.sidebar.write("`File downloaded!`")     
         st.sidebar.audio(uploaded_file)
 #         st.sidebar.markdown("<h1 style='text-align: left; color: red; font-size: 15px;'></h1>", unsafe_allow_html=True)
-        transcribe_button = st.sidebar.button("Get Transcript")
+        transcribe_button = st.sidebar.checkbox("Get Transcript")
         st.sidebar.markdown("---")
         #-----------------------------------------------------------------## Transcribing the audio file (refer utils.py) ##------------------------------------              
         if transcribe_button:
@@ -120,7 +120,7 @@ if url_type == "youtube":
 #----------------------------------------------------------# Transcribe checkbox-----------------------------------------------------------------
                     
                     st.sidebar.markdown("<h1 style='text-align: left; color: red; font-size: 15px;'></h1>", unsafe_allow_html=True)
-                    transcribe_cb = st.sidebar.button("Get YouTube Transcript") 
+                    transcribe_cb = st.sidebar.checkbox("Get YouTube Transcript") 
                     st.sidebar.markdown("***")
 #-----------------------------------------------------------------## Transcribing the audio file (refer utils.py) ##-----------------------------
                     if transcribe_cb:
@@ -173,7 +173,7 @@ elif url_type == "drive":
             get_GDrive_file = get_audio_from_GDrive_url(url)
             load_gdrive_file = Load_Video()
 #             st.markdown("<h1 style='text-align: left; color: red; font-size: 15px;'></h1>", unsafe_allow_html=True)
-            transcribe_cb = st.sidebar.button("Get URL Transcription ")
+            transcribe_cb = st.sidebar.checkbox("Get URL Transcription ")
             st.sidebar.markdown("---")
             #-----------------------------------------------------------------## Transcribing the audio file (refer utils.py) ##------------------------------------           
             if transcribe_cb:
