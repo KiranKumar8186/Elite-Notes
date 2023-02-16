@@ -115,8 +115,9 @@ def download_file_from_google_drive(id, destination):
 
 def Load_Video():
     global file_name
-    st.success("File downloaded!")
+    st.sidebar.success("`File downloaded!`")
     st.sidebar.header("Your 🎵 Audio or 🎥 Video...")
+    st.markdown("---")
     st.sidebar.audio(file_name)
 
 ##-------------------------------------------------{Upload File Part}-------------------------------------------------------------------------------------------------------------------
