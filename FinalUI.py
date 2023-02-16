@@ -30,7 +30,7 @@ st.markdown("<h3 style= 'color: red;'>Audio Transcribe</h3>", unsafe_allow_html=
 
 col1, col2 = st.columns(2)
 
-uploaded_file = col1.file_uploader("Upload audio file", type=["wav","mp3","ogg","wma","aac","flac","mp4","flv","m4a"])
+uploaded_file = col1.file_uploader("Upload Audio File :", type=["wav","mp3","ogg","wma","aac","flac","mp4","flv","m4a"])
 # uploaded_file = st.file_uploader("Upload audio file", type=["wav","mp3","ogg","wma","aac","flac","mp4","flv","m4a"])
 # # st.audio(uploaded_file)  
 st.markdown("---")
@@ -81,7 +81,7 @@ def main():
                 #---------------------------------------## Printing the Transcript and dtecting the language (process refer to utils.py)------------------------                             
                 
                 det_L = st.success("Detected language: {}".format(result['language']))
-                data = st.text_area("Transcript :", value= data, height=350)
+                data = st.text_area(uploaded_file.name + "- Transcript :", value= data, height=350)
     
                 #-------------------------------------------## Downloading transcripts into .txt or .srt------------------------------------------------------------    
                                                             
