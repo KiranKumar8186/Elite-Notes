@@ -43,8 +43,8 @@ def main():
         st.sidebar.header("Your 🎵 Audio or 🎥 Video...") 
         st.sidebar.write("`File downloaded!`")     
         st.sidebar.audio(uploaded_file)
-#         st.sidebar.markdown("<h1 style='text-align: left; color: red; font-size: 15px;'>Generate_Transcript</h1>", unsafe_allow_html=True)
-        transcribe_button = st.sidebar.checkbox("`Generate Transcript`")
+        st.sidebar.markdown("<h1 style='text-align: left; color: red; font-size: 15px;'>`Generate Transcript`</h1>", unsafe_allow_html=True)
+        transcribe_button = st.sidebar.checkbox("")
         st.sidebar.markdown("---")
         #-----------------------------------------------------------------## Transcribing the audio file (refer utils.py) ##------------------------------------              
         if transcribe_button:
@@ -118,8 +118,8 @@ if url_type == "youtube":
                     st.sidebar.video(url)
 #----------------------------------------------------------# Transcribe checkbox-----------------------------------------------------------------
                     
-#                     st.sidebar.markdown("<h1 style='text-align: left; color: red; font-size: 15px;'></h1>", unsafe_allow_html=True)
-                    transcribe_cb = st.sidebar.checkbox("`Generate YouTube Transcript`") 
+                    st.sidebar.markdown("<h1 style='text-align: left; color: red; font-size: 15px;'>`Generate YouTube Transcript`</h1>", unsafe_allow_html=True)
+                    transcribe_cb = st.sidebar.checkbox("") 
                     st.sidebar.markdown("***")
 #-----------------------------------------------------------------## Transcribing the audio file (refer utils.py) ##-----------------------------
                     if transcribe_cb:
