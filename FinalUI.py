@@ -69,7 +69,7 @@ def main():
                 st.sidebar.header("Select Option To Download The Transcript :")
                 file_extension_1 = st.sidebar.selectbox("Select Here...", ["TXT (.txt)", "SubRip (.srt)"], key='selectbox_1')
                 st.sidebar.write("You selected: ", file_extension_1)
-                                        
+                st.markdown("---")                        
                 # file_extension = st.selectbox("Select File Type To Download Transcript :", options=["TXT (.txt)", "SubRip (.srt)"])
                 if file_extension_1 == "TXT (.txt)":
                     file_extension_1 = "txt"
@@ -77,7 +77,7 @@ def main():
                 elif file_extension_1 == "SubRip (.srt)":
                     file_extension_1 = "srt"
                     data = result['srt']    
-                st.markdown("---")
+                
                 
                 #---------------------------------------## Printing the Transcript and dtecting the language (process refer to utils.py)------------------------                             
                 
