@@ -40,6 +40,7 @@ def main():
     if uploaded_file:
         getting_audio = get_audio_from_Upload(uploaded_file)        
         st.sidebar.header("Your 🎵 Audio or 🎥 Video...") 
+        st.sidebar.markdown("---")
         st.sidebar.write("`File downloaded!`")     
         st.sidebar.audio(uploaded_file)
 #         st.sidebar.markdown("<h1 style='text-align: left; color: red; font-size: 15px;'></h1>", unsafe_allow_html=True)
@@ -113,6 +114,7 @@ if url_type == "youtube":
             right_url = valid_url(url)
             if right_url:  
                 st.sidebar.header("Your 🎦 Youtube Video...")
+                st.sidebar.markdown("---")
                 if get_video_duration_from_youtube_url(url) <= MAX_VIDEO_LENGTH: 
                     st.sidebar.video(url)
 #----------------------------------------------------------# Transcribe checkbox-----------------------------------------------------------------
