@@ -28,7 +28,7 @@ st.markdown("<h2 style='padding: 10px; text-align: center; color: lightblack; fo
 st.markdown("---")
 st.markdown("<h3 style= 'color: red;'>Audio Transcribe</h3>", unsafe_allow_html=True)
 
-uploaded_file = st.file_uploader("Upload audio file", type=["wav","mp3","ogg","wma","aac","flac","mp4","flv"])
+uploaded_file = st.file_uploader("Upload audio file", type=["wav","mp3","ogg","wma","aac","flac","mp4","flv","m4a"])
 # st.audio(uploaded_file)  
 st.markdown("---")
 ##--------------------------------------------------------------------------------------------------------------------------------------------------------------------
