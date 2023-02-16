@@ -28,7 +28,7 @@ st.markdown("<h2 style='padding: 10px; text-align: center; color: lightblack; fo
 st.markdown("---")
 st.markdown("<h3 style= 'color: red;'>Audio Transcribe</h3>", unsafe_allow_html=True)
 
-col1, col2 = st.columns(2,1)
+col1, col2 = st.columns(2)
 
 uploaded_file = col1.file_uploader("Upload audio file", type=["wav","mp3","ogg","wma","aac","flac","mp4","flv","m4a"])
 # uploaded_file = st.file_uploader("Upload audio file", type=["wav","mp3","ogg","wma","aac","flac","mp4","flv","m4a"])
@@ -100,8 +100,8 @@ if __name__ == "__main__":
 #---------------------------------------------------------------------------------------------------------------------------------------------------------------#
 url = col2.text_input("Enter the URL: ")
 # url = st.text_input("Enter the URL: ")
-col3.warning("Make sure that URL can access anyone...")
-col3.button("Submit")
+col2.warning("Make sure that URL can access anyone...")
+col2.button("Submit")
 url_type = verify_url(url)
 
 #------------------------------------------------------------## if it is a Youtube URL ##----------------------------------------------------------------------------
