@@ -81,7 +81,7 @@ def main():
                 #---------------------------------------## Printing the Transcript and dtecting the language (process refer to utils.py)------------------------                             
                 
                 det_L = st.success("Detected language: {}".format(result['language']))
-                data = st.text_area(uploaded_file.name + "- Transcript :", value= data, height=350)
+                data = st.text_area("Transcription of - " + uploaded_file.name, value= data, height=350)
     
                 #-------------------------------------------## Downloading transcripts into .txt or .srt------------------------------------------------------------    
                                                             
