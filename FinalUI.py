@@ -116,9 +116,10 @@ if url_type == "youtube":
             if right_url:  
                
                 if get_video_duration_from_youtube_url(url) <= MAX_VIDEO_LENGTH: 
+                    st.sidebar.video(url)
                     # Display YouTube video
-                    _,col2,_ =st.columns([0.2, 0.25, 0.2])
-                    col2.video(url)
+#                     _,col2,_ =st.columns([0.2, 0.25, 0.2])
+#                     col2.video(url)
                     st.markdown("---")
 #----------------------------------------------------------# Transcribe checkbox-----------------------------------------------------------------
                     st.sidebar.markdown("---")
