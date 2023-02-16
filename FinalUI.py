@@ -96,8 +96,8 @@ if __name__ == "__main__":
 #---------------------------------------------------------------------------------------------------------------------------------------------------------------#
 url = col2.text_input("Enter the URL: ")
 # url = st.text_input("Enter the URL: ")
-st.warning("Make sure that URL can access anyone...")
-st.button("Submit")
+col2.warning("Make sure that URL can access anyone...")
+col2.button("Submit")
 st.markdown("---")
 url_type = verify_url(url)
 
