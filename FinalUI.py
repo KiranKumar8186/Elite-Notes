@@ -117,8 +117,8 @@ if url_type == "youtube":
                     st.sidebar.video(url)
 #----------------------------------------------------------# Transcribe checkbox-----------------------------------------------------------------
                     
-                    st.sidebar.markdown("<h1 style='text-align: left; color: red; font-size: 15px;'>`Generate YouTube Transcript`</h1>", unsafe_allow_html=True)
-                    transcribe_cb = st.sidebar.checkbox("") 
+                    st.sidebar.markdown("<h1 style='text-align: left; color: red; font-size: 15px;'></h1>", unsafe_allow_html=True)
+                    transcribe_cb = st.sidebar.button("`Generate YouTube Transcript`") 
                     st.sidebar.markdown("***")
 #-----------------------------------------------------------------## Transcribing the audio file (refer utils.py) ##-----------------------------
                     if transcribe_cb:
