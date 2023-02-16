@@ -111,11 +111,12 @@ if url_type == "youtube":
 ##-----------------------------------------------------## Load Whisper model ##------------------------------------------------------------------------------
         model =  load_whisper_model()    
 #---------------------------------------------------- # Check if the input url is a valid YouTube url (refer utils.py) ##------------------------------------
-        if url:          
+        if url:
+            _get_audio_from_youtube_url(url)
+            st.audio("audio.mp3")          
             right_url = valid_url(url)
             if right_url:
-                _get_audio_from_youtube_url(url)
-                st.audio("audio.mp3")
+                
                 if get_video_duration_from_youtube_url(url) <= MAX_VIDEO_LENGTH: 
                     # Display YouTube video
                     _,col2,_ =st.columns([0.2, 0.25, 0.2])
