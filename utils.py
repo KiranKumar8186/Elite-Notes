@@ -117,7 +117,7 @@ def Load_Video():
     global file_name
     st.success("File downloaded!")
     st.sidebar.header("Your 🎵 Audio or 🎥 Video...")
-    st.sidebar.video(file_name)
+    st.sidebar.audio(file_name)
 
 ##-------------------------------------------------{Upload File Part}-------------------------------------------------------------------------------------------------------------------
 
