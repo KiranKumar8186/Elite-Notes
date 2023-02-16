@@ -28,7 +28,7 @@ st.markdown("<h2 style='padding: 10px; text-align: center; color: lightblack; fo
 st.markdown("---")
 st.markdown("<h3 style= 'color: red; text-align: center'>Audio Transcribe</h3>", unsafe_allow_html=True)
 
-col1, col2, col3 = st.columns(3, 1, 1)
+col1, col2, col3 = st.columns(3)
 
 uploaded_file = col1.file_uploader("Upload Audio File :", type=["wav","mp3","ogg","wma","aac","flac","mp4","flv","m4a"])
 # uploaded_file = st.file_uploader("Upload audio file", type=["wav","mp3","ogg","wma","aac","flac","mp4","flv","m4a"])
@@ -95,7 +95,7 @@ if __name__ == "__main__":
 #                                                                                                                                                               #
 #---------------------------------------------------------------------------------------------------------------------------------------------------------------#
 
-col2.markdown("<h1 style='text-align: center; color: red; font-size: 10px;'>[or]</h1>", unsafe_allow_html=True)
+col2.markdown("<h1 style='text-align: center; color: red; font-size: 10px; margin : 10px auto;'>[or]</h1>", unsafe_allow_html=True)
 
 #---------------------------------------------------------------------------------------------------------------------------------------------------------------#
 url = col3.text_input("Enter the URL: ")
