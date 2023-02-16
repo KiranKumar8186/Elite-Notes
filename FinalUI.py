@@ -38,9 +38,8 @@ def main():
     if uploaded_file:
         getting_audio = get_audio_from_Upload(uploaded_file)        
         st.sidebar.header("Your 🎵 Audio or 🎥 Video...") 
-        st.sidebar.success("File downloaded!")     
+        st.sidebar.write("File downloaded!")     
         st.sidebar.video(uploaded_file)
-        st.sidebar.markdown("---")
         st.sidebar.markdown("<h1 style='text-align: left; color: red; font-size: 15px;'>Generate_Transcript</h1>", unsafe_allow_html=True)
         transcribe_button = st.sidebar.checkbox("")
         st.sidebar.markdown("---")
