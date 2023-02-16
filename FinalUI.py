@@ -115,12 +115,12 @@ if url_type == "youtube":
             if right_url:  
                 st.sidebar.header("Your 🎦 Youtube Video...")
                 if get_video_duration_from_youtube_url(url) <= MAX_VIDEO_LENGTH: 
-                    st.sidebar.video.audio(url)
+                    st.sidebar.video(url)
 #----------------------------------------------------------# Transcribe checkbox-----------------------------------------------------------------
                     
 #                     st.sidebar.markdown("<h1 style='text-align: left; color: red; font-size: 15px;'></h1>", unsafe_allow_html=True)
                     transcribe_cb = st.sidebar.checkbox("`Generate YouTube Transcript`") 
-                    st.sidebar.markdown("---")
+                    st.sidebar.markdown("***")
 #-----------------------------------------------------------------## Transcribing the audio file (refer utils.py) ##-----------------------------
                     if transcribe_cb:
                         ##---------------------------------------------------------------------
