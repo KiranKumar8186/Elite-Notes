@@ -27,7 +27,7 @@ def valid_url(url):
 def get_video_duration_from_youtube_url(url):
     
     _get_audio_from_youtube_url(url)
-    st.audio.('downloads','audio.mp3')
+    st.audio('downloads','audio.mp3')
     
     yt = YouTube(url)
     return yt.length
