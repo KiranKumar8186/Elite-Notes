@@ -43,7 +43,7 @@ def main():
         st.sidebar.write("`File downloaded!`")     
         st.sidebar.audio(uploaded_file)
 #         st.sidebar.markdown("<h1 style='text-align: left; color: red; font-size: 15px;'></h1>", unsafe_allow_html=True)
-        transcribe_button = st.sidebar.button("`Generate Transcript`")
+        transcribe_button = st.sidebar.button("Get Transcript")
         st.sidebar.markdown("---")
         #-----------------------------------------------------------------## Transcribing the audio file (refer utils.py) ##------------------------------------              
         if transcribe_button:
@@ -118,7 +118,7 @@ if url_type == "youtube":
 #----------------------------------------------------------# Transcribe checkbox-----------------------------------------------------------------
                     
                     st.sidebar.markdown("<h1 style='text-align: left; color: red; font-size: 15px;'></h1>", unsafe_allow_html=True)
-                    transcribe_cb = st.sidebar.button("`Generate YouTube Transcript`") 
+                    transcribe_cb = st.sidebar.button("Get YouTube Transcript") 
                     st.sidebar.markdown("***")
 #-----------------------------------------------------------------## Transcribing the audio file (refer utils.py) ##-----------------------------
                     if transcribe_cb:
@@ -151,7 +151,7 @@ if url_type == "youtube":
                                 data = result['srt']                           
 #---------------------------------------## Printing the Transcript and dtecting the language (process refer to utils.py)-----------------                                                        
                             det_L = st.success("Detected language: {}".format(result['language']))
-                            data = st.text_area("Transcript :", value= data, height=350)
+                            data = st.text_area("Transcription of YouTube Video :-", value= data, height=350)
 #--------------------------------------------------------------## Downloading transcripts into .txt or .srt----------------------------------                                                                          
                             st.download_button("Download", data=data, file_name="Transcript.{}".format(file_extension_2))
 #------------------------------------------------------------Drive URL----------------------------------------------------------------------------------------------
@@ -170,8 +170,8 @@ elif url_type == "drive":
         if url:
             get_GDrive_file = get_audio_from_GDrive_url(url)
             load_gdrive_file = Load_Video()
-            st.markdown("<h1 style='text-align: left; color: red; font-size: 15px;'>Transcribe</h1>", unsafe_allow_html=True)
-            transcribe_cb = st.checkbox("🎤")
+            st.markdown("<h1 style='text-align: left; color: red; font-size: 15px;'></h1>", unsafe_allow_html=True)
+            transcribe_cb = st.button("Get URL Transcription ")
             #-----------------------------------------------------------------## Transcribing the audio file (refer utils.py) ##------------------------------------           
             if transcribe_cb:
                 ##---------------------------------------------------------------------
@@ -209,7 +209,7 @@ elif url_type == "drive":
                     #---------------------------------------## Printing the Transcript and dtecting the language (process refer to utils.py)--------------------------                             
                   
                     det_L = st.success("Detected language: {}".format(result['language']))
-                    data = st.text_area("Transcript :", value= data, height=350)
+                    data = st.text_area("Transcript of GoogleDrive Audio/Video File :-", value= data, height=350)
                
                 #-------------------------------------------## Downloading transcripts into .txt or .srt--------------------------------------------------------------    
                                                              
