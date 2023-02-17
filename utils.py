@@ -14,7 +14,7 @@ MAX_VIDEO_LENGTH = 30*60
 
 @st.cache(show_spinner=False)
 def load_whisper_model():
-    model = whisper.load_model('base', device='cpu')
+    model = whisper.load_model('medium', device='cpu')
     return model
 
 ##--------------------------------------------------------------------------------------------------------------------------------------------------------------------
