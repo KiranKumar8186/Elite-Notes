@@ -48,6 +48,8 @@ def main():
         st.sidebar.markdown("---")
         #-----------------------------------------------------------------## Transcribing the audio file (refer utils.py) ##------------------------------------              
         if transcribe_button:
+            
+            time_taken = 0
             ##---------------------------------------------------------------------
             start_time = time.time()
             ##---------------------------------------------------------------------
@@ -60,8 +62,8 @@ def main():
                     st.warning("Oops! Someone else is using the model right now to transcribe another video. Please try again in a few seconds.")
             ##---------------------------------------------------------------------                    
             end_time = time.time()
-            time_elapsed = end_time - start_time
-            st.sidebar.write("Time elapsed:", round(time_elapsed,2), "seconds")
+            time_taken = end_time - start_time
+            st.sidebar.write("Time elapsed:", round(time_taken,2), "seconds")
             ##---------------------------------------------------------------------
             #------------------------------## getting transcript Text and Downlaoding Text file into .txt or .srt (process refer to utils.py) ##----------------                                                       
                 
