@@ -48,8 +48,6 @@ def main():
         st.sidebar.markdown("---")
         #-----------------------------------------------------------------## Transcribing the audio file (refer utils.py) ##------------------------------------              
         if transcribe_button:
-            
-            time_taken = 0
             ##---------------------------------------------------------------------
             start_time = time.time()
             ##---------------------------------------------------------------------
@@ -63,8 +61,7 @@ def main():
             ##---------------------------------------------------------------------                    
             end_time = time.time()
             time_taken = end_time - start_time
-#             st.sidebar.write("Time elapsed:", round(time_taken,2), "seconds")
-            st.sidebar.write("Time elapsed:", {time_taken}, "seconds")
+            st.sidebar.write("Time elapsed:", round(time_taken,2), "seconds")
             ##---------------------------------------------------------------------
             #------------------------------## getting transcript Text and Downlaoding Text file into .txt or .srt (process refer to utils.py) ##----------------                                                       
                 
